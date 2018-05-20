@@ -1,0 +1,149 @@
+/**
+ * 门户首页API
+ *
+ * @author haojinlong
+ */
+@RestController
+@RequestMapping("/api/index")
+public class IndexResource {
+
+	@Autowired
+	private AccountService accountService;
+	@Autowired
+	private BannerService bannerService;
+	@Autowired
+	private LinkService linkService;
+	@Autowired
+	private LeavaMessageService leavaMessageService;
+
+	/**
+	 * 用户注册
+	 * 
+	 * @param verificationCode
+	 * @param account
+	 * @param request
+	 */
+	@PostMapping("/register/{verificationCode}")
+	public void register(@PathVariable String verificationCode, @RequestBody Account account,HttpServletRequest request) {
+		Assert.hasText(account.getUsername(), "用户名为空");
+		Assert.hasText(account.getPassword(), "密码为空");
+		Assert.hasText(account.getMobile(), "手机号为空");
+
+		String sessionVerificationCode = (String) request.getSession().getAttribute("code");
+		Long codeTimeStamp = (Long) request.getSession().getAttribute("codeTimeStamp");
+
+		accountService.register(account, verificationCode, sessionVerificationCode, codeTimeStamp);
+	}
+
+	/**
+	 * 用户登陆
+	 * 
+	 * @param payload
+	 * @param request
+	 * @return
+	 */
+	@PostMapping("/login")
+	public Account login(@RequestBody Account payload, HttpServletRequest request) {
+		Assert.hasText(payload.getMobile(), "手机号为空");
+		Assert.hasText(payload.getPassword(), "密码为空");
+
+		Account account = accountService.login(payload);
+		String token = UUID.randomUUID().toString().replaceAll("-", "");
+		account.setSessionId(token);
+		request.getSession().setAttribute(token, account);
+
+		return account;
+
+	}
+
+	/**
+	 * 退出登录
+	 * 
+	 * @param request
+	 */
+	@PostMapping("/logout")
+	public void logout(HttpServletRequest request) {
+		request.getSession().invalidate();
+	}
+
+	/**
+	 * 更新用户头像
+	 * 
+	 * @param avatar
+	 * @param request
+	 */
+	@NeedLogin
+	@PutMapping("/updateAvatar")
+	public void updateAvatar(@RequestBody Account payload, HttpServletRequest request) {
+		Assert.hasText(payload.getAvatar(), "头像为空");
+
+		Account account = (Account) request.getAttribute("account");
+
+		accountService.updateAvatar(account.getAccountId(), payload.getAvatar());
+	}
+
+	/**
+	 * 重置密码
+	 * 
+	 * @param payload
+	 * @param request
+	 */
+	@NeedLogin
+	@PutMapping("/updatePassword")
+	public void updatePassword(@RequestBody Account payload, HttpServletRequest request) {
+		Assert.hasText(payload.getNewPassword(), "原密码为空");
+		Assert.hasText(payload.getNewPassword2(), "确认密码为空");
+
+		Account account = (Account) request.getAttribute("account");
+		payload.setAccountId(account.getAccountId());
+
+		accountService.updatePassword(account);
+	}
+
+	/**
+	 * 获取横幅
+	 * 
+	 * @return
+	 */
+	@GetMapping("/getBanner")
+	public List<Banner> getBannerListAll() {
+		return bannerService.listAll();
+	}
+
+	/**
+	 * 获取友情链接
+	 * 
+	 * @return
+	 */
+	@GetMapping("/getLink")
+	public List<Link> getLinkListAll() {
+		return linkService.listAll();
+	}
+
+	/**
+	 * 分頁获取留言列表
+	 * 
+	 * @param page
+	 * @param limit
+	 * @return
+	 */
+	@GetMapping("/getLeaveMessage")
+	public Page<> getLeaveMessagePage(Integer page, Integer limit) {
+		return leavaMessageService.page(page, limit);
+	}
+
+	/**
+	 * 新增留言
+	 * 
+	 * @param leaveMessage
+	 */
+	@PostMapping("/addLeaveMessage")
+	public void addLeaveMessage(@RequestBody LeaveMessage leaveMessage) {
+		Assert.hasText(leaveMessage.getQuestionerName(), "留言人为空");
+		Assert.hasText(leaveMessage.getQuestionerMobile(), "联系电话为空");
+		Assert.hasText(leaveMessage.getContent(), "留言内容为空");
+
+		leavaMessageService.add(leaveMessage);
+	}
+
+}
