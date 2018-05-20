@@ -4,7 +4,7 @@
  * @author haojinlong
  */
 @RestController
-@RequestMapping("/api/index")
+@RequestMapping("/api/indexwww")
 public class IndexResource {
 
 	@Autowired
