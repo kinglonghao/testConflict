@@ -1,5 +1,5 @@
-ï»¿/**
- * é—¨æˆ·é¦–é¡µAPI
+/**
+ * ÃÅ»§Ê×Ò³API
  *
  * @author haojinlong
  */
@@ -17,7 +17,7 @@ public class IndexResource {
 	private LeavaMessageService leavaMessageService;
 
 	/**
-	 * ç”¨æˆ·æ³¨å†Œ
+	 * ÓÃ»§×¢²á
 	 * 
 	 * @param verificationCode
 	 * @param account
@@ -25,9 +25,9 @@ public class IndexResource {
 	 */
 	@PostMapping("/register/{verificationCode}")
 	public void register(@PathVariable String verificationCode, @RequestBody Account account,HttpServletRequest request) {
-		Assert.hasText(account.getUsername(), "ç”¨æˆ·åä¸ºç©º");
-		Assert.hasText(account.getPassword(), "å¯†ç ä¸ºç©º");
-		Assert.hasText(account.getMobile(), "æ‰‹æœºå·ä¸ºç©º");
+		Assert.hasText(account.getUsername(), "ÓÃ»§ÃûÎª¿Õ");
+		Assert.hasText(account.getPassword(), "ÃÜÂëÎª¿Õ");
+		Assert.hasText(account.getMobile(), "ÊÖ»úºÅÎª¿Õ");
 
 		String sessionVerificationCode = (String) request.getSession().getAttribute("code");
 		Long codeTimeStamp = (Long) request.getSession().getAttribute("codeTimeStamp");
@@ -36,16 +36,16 @@ public class IndexResource {
 	}
 
 	/**
-	 * ç”¨æˆ·ç™»é™†
+	 * ÓÃ»§µÇÂ½
 	 * 
 	 * @param payload
 	 * @param request
 	 * @return
 	 */
-	@PostMapping("/login")
+	@PostMapping("/login____")
 	public Account login(@RequestBody Account payload, HttpServletRequest request) {
-		Assert.hasText(payload.getMobile(), "æ‰‹æœºå·ä¸ºç©º");
-		Assert.hasText(payload.getPassword(), "å¯†ç ä¸ºç©º");
+		Assert.hasText(payload.getMobile(), "ÊÖ»úºÅÎª¿Õ");
+		Assert.hasText(payload.getPassword(), "ÃÜÂëÎª¿Õ");
 
 		Account account = accountService.login(payload);
 		String token = UUID.randomUUID().toString().replaceAll("-", "");
@@ -57,7 +57,7 @@ public class IndexResource {
 	}
 
 	/**
-	 * é€€å‡ºç™»å½•
+	 * ÍË³öµÇÂ¼
 	 * 
 	 * @param request
 	 */
@@ -68,7 +68,7 @@ public class IndexResource {
 
 	/**
 	 * 
-	 * æ›´æ–°ç”¨æˆ·å¤´åƒ
+	 * ¸üĞÂÓÃ»§Í·Ïñ
 	 * 
 	 * @param avatar
 	 * @param request
@@ -76,7 +76,7 @@ public class IndexResource {
 	@NeedLogin
 	@PutMapping("/updateAvatar")
 	public void updateAvatar(@RequestBody Account payload, HttpServletRequest request) {
-		Assert.hasText(payload.getAvatar(), "å¤´åƒä¸ºç©º");
+		Assert.hasText(payload.getAvatar(), "Í·ÏñÎª¿Õ");
 
 		Account account = (Account) request.getAttribute("account");
 
@@ -84,7 +84,7 @@ public class IndexResource {
 	}
 
 	/**
-	 * é‡ç½®å¯†ç 
+	 * ÖØÖÃÃÜÂë
 	 * 
 	 * @param payload
 	 * @param request
@@ -92,8 +92,8 @@ public class IndexResource {
 	@NeedLogin
 	@PutMapping("/updatePassword")
 	public void updatePassword(@RequestBody Account payload, HttpServletRequest request) {
-		Assert.hasText(payload.getNewPassword(), "åŸå¯†ç ä¸ºç©º");
-		Assert.hasText(payload.getNewPassword2(), "ç¡®è®¤å¯†ç ä¸ºç©º");
+		Assert.hasText(payload.getNewPassword(), "Ô­ÃÜÂëÎª¿Õ");
+		Assert.hasText(payload.getNewPassword2(), "È·ÈÏÃÜÂëÎª¿Õ");
 
 		Account account = (Account) request.getAttribute("account");
 		payload.setAccountId(account.getAccountId());
@@ -102,7 +102,7 @@ public class IndexResource {
 	}
 
 	/**
-	 * è·å–æ¨ªå¹…
+	 * »ñÈ¡ºá·ù
 	 * 
 	 * @return
 	 */
@@ -112,7 +112,7 @@ public class IndexResource {
 	}
 
 	/**
-	 * è·å–å‹æƒ…é“¾æ¥
+	 * »ñÈ¡ÓÑÇéÁ´½Ó
 	 * 
 	 * @return
 	 */
@@ -122,7 +122,7 @@ public class IndexResource {
 	}
 
 	/**
-	 * åˆ†é è·å–ç•™è¨€åˆ—è¡¨
+	 * ·Öí“»ñÈ¡ÁôÑÔÁĞ±í
 	 * 
 	 * @param page
 	 * @param limit
@@ -134,15 +134,15 @@ public class IndexResource {
 	}
 
 	/**
-	 * æ–°å¢ç•™è¨€
+	 * ĞÂÔöÁôÑÔ
 	 * 
 	 * @param leaveMessage
 	 */
 	@PostMapping("/addLeaveMessage")
 	public void addLeaveMessage(@RequestBody LeaveMessage leaveMessage) {
-		Assert.hasText(leaveMessage.getQuestionerName(), "ç•™è¨€äººä¸ºç©º");
-		Assert.hasText(leaveMessage.getQuestionerMobile(), "è”ç³»ç”µè¯ä¸ºç©º");
-		Assert.hasText(leaveMessage.getContent(), "ç•™è¨€å†…å®¹ä¸ºç©º");
+		Assert.hasText(leaveMessage.getQuestionerName(), "ÁôÑÔÈËÎª¿Õ");
+		Assert.hasText(leaveMessage.getQuestionerMobile(), "ÁªÏµµç»°Îª¿Õ");
+		Assert.hasText(leaveMessage.getContent(), "ÁôÑÔÄÚÈİÎª¿Õ");
 
 		leavaMessageService.add(leaveMessage);
 	}
