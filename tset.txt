@@ -61,14 +61,13 @@ public class IndexResource {
 	 * 
 	 * @param request
 	 */
-	@PostMapping("/logout")
+	@PostMapping("/log_out")
 	public void logout(HttpServletRequest request) {
 		request.getSession().invalidate();
 	}
 
 	/**
-	 * 更新用户头像
-	 * 
+	 * 	 * 
 	 * @param avatar
 	 * @param request
 	 */
