@@ -42,7 +42,7 @@ public class IndexResource {
 	 * @param request
 	 * @return
 	 */
-	@PostMapping("/login")
+	@PostMapping("/login____")
 	public Account login(@RequestBody Account payload, HttpServletRequest request) {
 		Assert.hasText(payload.getMobile(), "手机号为空");
 		Assert.hasText(payload.getPassword(), "密码为空");
@@ -67,6 +67,7 @@ public class IndexResource {
 	}
 
 	/**
+	 * 
 	 * 更新用户头像
 	 * 
 	 * @param avatar
@@ -128,7 +129,7 @@ public class IndexResource {
 	 * @return
 	 */
 	@GetMapping("/getLeaveMessage")
-	public Page<> getLeaveMessagePage(Integer page, Integer limit) {
+	public Page<LeaveMessage> getLeaveMessagePage(Integer page, Integer limit) {
 		return leavaMessageService.page(page, limit);
 	}
 
