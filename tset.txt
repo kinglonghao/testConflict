@@ -61,19 +61,15 @@ public class IndexResource {
 	 * 
 	 * @param request
 	 */
-<<<<<<< HEAD
 	@PostMapping("/logout")
->>>>>>> 6fd1392dd2746df1094e8f414d1eea6c285bc665
 	public void logout(HttpServletRequest request) {
 		request.getSession().invalidate();
 	}
 
 	/**
-<<<<<<< HEAD
 	 * 
 	 * 更新用户头像
 	 * 
->>>>>>> 6fd1392dd2746df1094e8f414d1eea6c285bc665
 	 * @param avatar
 	 * @param request
 	 */
@@ -133,9 +129,7 @@ public class IndexResource {
 	 * @return
 	 */
 	@GetMapping("/getLeaveMessage")
-<<<<<<< HEAD
 	public Page<LeaveMessage> getLeaveMessagePage(Integer page, Integer limit) {
->>>>>>> 6fd1392dd2746df1094e8f414d1eea6c285bc665
 		return leavaMessageService.page(page, limit);
 	}
 
@@ -153,6 +147,4 @@ public class IndexResource {
 		leavaMessageService.add(leaveMessage);
 	}
 
-<<<<<<< HEAD
 }
->>>>>>> 6fd1392dd2746df1094e8f414d1eea6c285bc665
