@@ -1,5 +1,5 @@
-/**
- * ÃÅ»§Ê×Ò³API
+ï»¿/**
+ * é—¨æˆ·é¦–é¡µAPI
  *
  * @author haojinlong
  */
@@ -17,7 +17,7 @@ public class IndexResource {
 	private LeavaMessageService leavaMessageService;
 
 	/**
-	 * ÓÃ»§×¢²á
+	 * ç”¨æˆ·æ³¨å†Œ
 	 * 
 	 * @param verificationCode
 	 * @param account
@@ -25,9 +25,9 @@ public class IndexResource {
 	 */
 	@PostMapping("/register/{verificationCode}")
 	public void register(@PathVariable String verificationCode, @RequestBody Account account,HttpServletRequest request) {
-		Assert.hasText(account.getUsername(), "ÓÃ»§ÃûÎª¿Õ");
-		Assert.hasText(account.getPassword(), "ÃÜÂëÎª¿Õ");
-		Assert.hasText(account.getMobile(), "ÊÖ»úºÅÎª¿Õ");
+		Assert.hasText(account.getUsername(), "ç”¨æˆ·åä¸ºç©º");
+		Assert.hasText(account.getPassword(), "å¯†ç ä¸ºç©º");
+		Assert.hasText(account.getMobile(), "æ‰‹æœºå·ä¸ºç©º");
 
 		String sessionVerificationCode = (String) request.getSession().getAttribute("code");
 		Long codeTimeStamp = (Long) request.getSession().getAttribute("codeTimeStamp");
@@ -36,7 +36,7 @@ public class IndexResource {
 	}
 
 	/**
-	 * ÓÃ»§µÇÂ½
+	 * ç”¨æˆ·ç™»é™†
 	 * 
 	 * @param payload
 	 * @param request
@@ -44,8 +44,8 @@ public class IndexResource {
 	 */
 	@PostMapping("/login")
 	public Account login(@RequestBody Account payload, HttpServletRequest request) {
-		Assert.hasText(payload.getMobile(), "ÊÖ»úºÅÎª¿Õ");
-		Assert.hasText(payload.getPassword(), "ÃÜÂëÎª¿Õ");
+		Assert.hasText(payload.getMobile(), "æ‰‹æœºå·ä¸ºç©º");
+		Assert.hasText(payload.getPassword(), "å¯†ç ä¸ºç©º");
 
 		Account account = accountService.login(payload);
 		String token = UUID.randomUUID().toString().replaceAll("-", "");
@@ -57,24 +57,30 @@ public class IndexResource {
 	}
 
 	/**
-	 * ÍË³öµÇÂ¼
+	 * é€€å‡ºç™»å½•
 	 * 
 	 * @param request
 	 */
-	@PostMapping("/log_out")
+<<<<<<< HEAD
+	@PostMapping("/logout")
+>>>>>>> 6fd1392dd2746df1094e8f414d1eea6c285bc665
 	public void logout(HttpServletRequest request) {
 		request.getSession().invalidate();
 	}
 
 	/**
-	 * 	 * 
+<<<<<<< HEAD
+	 * 
+	 * æ›´æ–°ç”¨æˆ·å¤´åƒ
+	 * 
+>>>>>>> 6fd1392dd2746df1094e8f414d1eea6c285bc665
 	 * @param avatar
 	 * @param request
 	 */
 	@NeedLogin
 	@PutMapping("/updateAvatar")
 	public void updateAvatar(@RequestBody Account payload, HttpServletRequest request) {
-		Assert.hasText(payload.getAvatar(), "Í·ÏñÎª¿Õ");
+		Assert.hasText(payload.getAvatar(), "å¤´åƒä¸ºç©º");
 
 		Account account = (Account) request.getAttribute("account");
 
@@ -82,7 +88,7 @@ public class IndexResource {
 	}
 
 	/**
-	 * ÖØÖÃÃÜÂë
+	 * é‡ç½®å¯†ç 
 	 * 
 	 * @param payload
 	 * @param request
@@ -90,8 +96,8 @@ public class IndexResource {
 	@NeedLogin
 	@PutMapping("/updatePassword")
 	public void updatePassword(@RequestBody Account payload, HttpServletRequest request) {
-		Assert.hasText(payload.getNewPassword(), "Ô­ÃÜÂëÎª¿Õ");
-		Assert.hasText(payload.getNewPassword2(), "È·ÈÏÃÜÂëÎª¿Õ");
+		Assert.hasText(payload.getNewPassword(), "åŸå¯†ç ä¸ºç©º");
+		Assert.hasText(payload.getNewPassword2(), "ç¡®è®¤å¯†ç ä¸ºç©º");
 
 		Account account = (Account) request.getAttribute("account");
 		payload.setAccountId(account.getAccountId());
@@ -100,7 +106,7 @@ public class IndexResource {
 	}
 
 	/**
-	 * »ñÈ¡ºá·ù
+	 * è·å–æ¨ªå¹…
 	 * 
 	 * @return
 	 */
@@ -110,7 +116,7 @@ public class IndexResource {
 	}
 
 	/**
-	 * »ñÈ¡ÓÑÇéÁ´½Ó
+	 * è·å–å‹æƒ…é“¾æ¥
 	 * 
 	 * @return
 	 */
@@ -120,29 +126,33 @@ public class IndexResource {
 	}
 
 	/**
-	 * ·Öí“»ñÈ¡ÁôÑÔÁĞ±í
+	 * åˆ†é è·å–ç•™è¨€åˆ—è¡¨
 	 * 
 	 * @param page
 	 * @param limit
 	 * @return
 	 */
 	@GetMapping("/getLeaveMessage")
+<<<<<<< HEAD
 	public Page<LeaveMessage> getLeaveMessagePage(Integer page, Integer limit) {
+>>>>>>> 6fd1392dd2746df1094e8f414d1eea6c285bc665
 		return leavaMessageService.page(page, limit);
 	}
 
 	/**
-	 * ĞÂÔöÁôÑÔ
+	 * æ–°å¢ç•™è¨€
 	 * 
 	 * @param leaveMessage
 	 */
 	@PostMapping("/addLeaveMessage")
 	public void addLeaveMessage(@RequestBody LeaveMessage leaveMessage) {
-		Assert.hasText(leaveMessage.getQuestionerName(), "ÁôÑÔÈËÎª¿Õ");
-		Assert.hasText(leaveMessage.getQuestionerMobile(), "ÁªÏµµç»°Îª¿Õ");
-		Assert.hasText(leaveMessage.getContent(), "ÁôÑÔÄÚÈİÎª¿Õ");
+		Assert.hasText(leaveMessage.getQuestionerName(), "ç•™è¨€äººä¸ºç©º");
+		Assert.hasText(leaveMessage.getQuestionerMobile(), "è”ç³»ç”µè¯ä¸ºç©º");
+		Assert.hasText(leaveMessage.getContent(), "ç•™è¨€å†…å®¹ä¸ºç©º");
 
 		leavaMessageService.add(leaveMessage);
 	}
 
+<<<<<<< HEAD
 }
+>>>>>>> 6fd1392dd2746df1094e8f414d1eea6c285bc665
